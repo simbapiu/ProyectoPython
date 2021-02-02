@@ -76,3 +76,17 @@ if filtro_NH != 'Selecciona una colonia' :
     st.image(list(filter_values['images']), caption=list(filter_values['name']), width=64, use_column_width=True)
 else:
     st.image(images, caption=list(top_5['name']), width=64, use_column_width=True)
+    
+
+    
+import plotly.express as px
+
+df2 = df.groupby(['neighbourhood', 'price', 'neighbourhood_group']).size().reset_index(name='Count')
+df2 = df2.sort_values('price')
+
+fig = px.scatter(df2, x="price", y="Count", animation_frame="price", animation_group="neighbourhood",
+           size="Count", color="neighbourhood_group", hover_name="neighbourhood",
+           log_x=True, size_max=50, range_x=[1,10000], range_y=[1,200])
+
+fig["layout"].pop("updatemenus") # optional, drop animation buttons
+st.plotly_chart(fig)
