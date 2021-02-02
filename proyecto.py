@@ -113,11 +113,11 @@ st.text("Existen varios tipos de alojamientos, tal vez nos sea indistinto si que
 
 if filter_NHG != "Selecciona un vecindario":
     if filtro_NH != 'Selecciona una colonia' :
-        filterPrice = st.slider("Filtrar por precio", nh_filtrado['price'].min(), nh_filtrado['price'].max(), [nh_filtrado['price'].min(), nh_filtrado['price'].max()])
-        st.map(nh_filtrado[(nh_filtrado['price'] >= filterPrice[0]) & (nh_filtrado['price'] <= filterPrice[1])])
+        filterPrice = st.slider("Filtrar por precio", float(nh_filtrado['price'].min()), float(nh_filtrado['price'].max()), [float(nh_filtrado['price'].min()), float(nh_filtrado['price'].max())])
+        st.map(nh_filtrado[(nh_filtrado['price'] >= float(filterPrice[0])) & (nh_filtrado['price'] <= float(filterPrice[1]))])
     else:
-        filterPrice = st.slider("Filtrar por precio", dfFiltrado['price'].min(), dfFiltrado['price'].max(), [dfFiltrado['price'].min(), dfFiltrado['price'].max()])
-        st.map(dfFiltrado[(dfFiltrado['price'] >= filterPrice[0]) & (dfFiltrado['price'] <= filterPrice[1])])
+        filterPrice = st.slider("Filtrar por precio", float(dfFiltrado['price'].min()), float(dfFiltrado['price'].max()), [float(dfFiltrado['price'].min()), float(dfFiltrado['price'].max())])
+        st.map(dfFiltrado[(dfFiltrado['price'] >= float(filterPrice[0])) & (dfFiltrado['price'] <= float(filterPrice[1]))])
 else:
     filterPrice = st.slider("Filtrar por precio", float(df['price'].min()), float(df['price'].max()), [float(df['price'].min()), float(df['price'].max())])
     st.map(df[(df['price'] >= float(filterPrice[0])) & (df['price'] <= float(filterPrice[1]))])
