@@ -2,7 +2,10 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.figure_factory as ff
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 from PIL import Image
 
 # ====== Proyecto Airbnb equipo 2 ======
@@ -32,30 +35,9 @@ st.text("Nueva York es una de las ciudades con mayor costo para vivir. \n" +
         "sin embargo la otra mitad de la oferta son cuartos mas un pequeño porcentaje de cuartos \n" +
         "compartidos y cuartos de hotel")
 
-# Group data together
-f1 = df.groupby(['neighbourhood_group', 'neighbourhood']).size().reset_index(name='Count')
-
-fBronx = f1[f1['neighbourhood_group']=='Bronx']
-fManhattan = f1[f1['neighbourhood_group']=='Manhattan']
-fSI = f1[f1['neighbourhood_group']=='Staten Island']
-fQueens = f1[f1['neighbourhood_group']=='Queens']
-fBrooklyn = f1[f1['neighbourhood_group']=='Brooklyn']
-
-x1 = list(fBronx['Count'])
-x2 = list(fManhattan['Count'])
-x3 = list(fSI['Count'])
-x4 = list(fQueens['Count'])
-x5 = list(fBrooklyn['Count'])
-
-hist_data = [x1, x2, x3, x4, x5]
-
-group_labels = list(f1['neighbourhood_group'].unique())
-
-# Create distplot with custom bin_size
-fig = ff.create_distplot(hist_data, group_labels, bin_size=[1000, 2000, 3000, 4000])
-
-# Plot!
-st.plotly_chart(fig, use_container_width=True)
+f1 = df.groupby(['room_type']).size().reset_index(name='Count')
+fig = px.pie(f1, values=f1["Count"], names=f1["room_type"], title='Distribución de alojamientos')
+st.plotly_chart(fig)
 
 if filter_NB != "Selecciona un vecindario":
     st.map(df[ df["neighbourhood_group"] == filter_NB] )
